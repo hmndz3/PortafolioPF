@@ -7,8 +7,5 @@ startCommand = "npx serve dist -l $PORT"
 healthcheckPath = "/"
 restartPolicyType = "on_failure"
 
-[nixpacks]
-providers = ["node"]
-
 [nixpacks.variables]
-NODE_VERSION = "20"
+NODE_VERSION = "22"
