@@ -26,14 +26,14 @@ export default function Navbar() {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         padding: '0 clamp(20px,5vw,60px)', height: '64px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(7,7,15,0.85)' : 'transparent',
+        background: scrolled ? 'rgba(255,240,230,0.88)' : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(6,182,212,0.1)' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
         transition: 'all 0.4s ease',
       }}
     >
       <a href="#" style={{ textDecoration: 'none' }}>
-        <span className="mono" style={{ fontWeight: 700, fontSize: '18px', letterSpacing: '-0.5px' }}>
+        <span className="mono" style={{ fontWeight: 700, fontSize: '18px' }}>
           <span style={{ color: 'var(--accent)' }}>hm</span>
           <span style={{ color: 'var(--accent2)' }}>.</span>
         </span>
@@ -52,13 +52,12 @@ export default function Navbar() {
         <motion.a href="mailto:harrymndz3@gmail.com"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
           style={{
-            padding: '8px 20px', border: '1px solid rgba(6,182,212,0.4)',
+            padding: '8px 20px', border: '1px solid rgba(255,140,122,0.35)',
             borderRadius: '6px', color: 'var(--accent)', textDecoration: 'none',
             fontSize: '13px', fontWeight: 600, transition: 'all 0.2s',
-            background: 'rgba(6,182,212,0.05)',
           }}
-          onMouseEnter={e => { e.target.style.background = 'rgba(6,182,212,0.12)'; e.target.style.boxShadow = '0 0 20px rgba(6,182,212,0.2)' }}
-          onMouseLeave={e => { e.target.style.background = 'rgba(6,182,212,0.05)'; e.target.style.boxShadow = 'none' }}
+          onMouseEnter={e => { e.target.style.background = 'rgba(8,145,178,0.08)'; e.target.style.borderColor = 'var(--accent)' }}
+          onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.borderColor = 'rgba(255,140,122,0.35)' }}
         >Contactar</motion.a>
       </nav>
 
@@ -72,8 +71,8 @@ export default function Navbar() {
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             style={{
               position: 'absolute', top: '64px', left: 0, right: 0,
-              background: 'rgba(7,7,15,0.97)', backdropFilter: 'blur(20px)',
-              borderBottom: '1px solid rgba(6,182,212,0.1)', padding: '24px clamp(20px,5vw,60px)',
+              background: 'rgba(255,240,230,0.97)', backdropFilter: 'blur(20px)',
+              borderBottom: '1px solid var(--border)', padding: '24px clamp(20px,5vw,60px)',
               display: 'flex', flexDirection: 'column', gap: '20px',
             }}>
             {links.map(l => (

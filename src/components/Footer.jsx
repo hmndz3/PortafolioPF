@@ -2,7 +2,7 @@ import { Github, Mail } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer style={{ borderTop: '1px solid rgba(6,182,212,0.08)', padding: '36px clamp(24px,6vw,120px)' }}>
+    <footer style={{ borderTop: '1px solid var(--border)', padding: '36px clamp(24px,6vw,120px)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
         <div>
           <span className="mono" style={{ fontWeight: 700, fontSize: '17px' }}>

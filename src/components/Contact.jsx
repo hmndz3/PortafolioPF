@@ -39,16 +39,16 @@ export default function Contact() {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
             style={{
               display: 'flex', flexDirection: 'column', gap: '16px', padding: '28px',
-              background: 'rgba(22,22,31,0.6)', backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px',
+              background: 'var(--surface)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+              border: '1px solid var(--border)', borderRadius: '16px', boxShadow: '0 4px 24px rgba(0,0,0,0.05)',
               textDecoration: 'none', transition: 'border-color 0.3s',
             }}
-            onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'}
-            onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}
+            onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,140,122,0.3)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
           >
             <div style={{
               width: '44px', height: '44px',
-              background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)',
+              background: 'rgba(255,140,122,0.12)', border: '1px solid rgba(255,140,122,0.25)',
               borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)',
             }}>{c.icon}</div>
             <div>
@@ -66,8 +66,8 @@ export default function Contact() {
         viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
         style={{
           padding: 'clamp(36px,5vw,56px)',
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.04))',
-          border: '1px solid rgba(99,102,241,0.15)', borderRadius: '20px', textAlign: 'center',
+          background: 'linear-gradient(135deg, rgba(255,140,122,0.08), rgba(44,95,111,0.05))',
+          border: '1px solid rgba(255,140,122,0.12)', borderRadius: '20px', textAlign: 'center',
         }}>
         <h3 style={{ color: 'var(--text-h)', fontSize: 'clamp(22px,3vw,32px)', fontWeight: 800, letterSpacing: '-1px', marginBottom: '12px' }}>
           ¿Tienes un proyecto en mente?
@@ -80,10 +80,10 @@ export default function Contact() {
             display: 'inline-block', padding: '15px 40px',
             background: 'var(--accent)', borderRadius: '8px', color: '#fff',
             textDecoration: 'none', fontWeight: 700, fontSize: '15px',
-            boxShadow: '0 0 40px rgba(99,102,241,0.3)', transition: 'all 0.25s',
+            boxShadow: '0 0 40px rgba(255,140,122,0.3)', transition: 'all 0.25s',
           }}
-          onMouseEnter={e => { e.target.style.transform = 'translateY(-3px)'; e.target.style.boxShadow = '0 8px 60px rgba(99,102,241,0.5)' }}
-          onMouseLeave={e => { e.target.style.transform = 'none'; e.target.style.boxShadow = '0 0 40px rgba(99,102,241,0.3)' }}
+          onMouseEnter={e => { e.target.style.transform = 'translateY(-3px)'; e.target.style.boxShadow = '0 8px 60px rgba(255,140,122,0.5)' }}
+          onMouseLeave={e => { e.target.style.transform = 'none'; e.target.style.boxShadow = '0 0 40px rgba(255,140,122,0.3)' }}
         >
           Escríbeme →
         </a>

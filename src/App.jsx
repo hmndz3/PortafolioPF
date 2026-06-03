@@ -1,4 +1,5 @@
 import NetworkBackground from './components/NetworkBackground'
+import GrowingTrees from './components/GrowingTrees'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -11,6 +12,7 @@ export default function App() {
   return (
     <>
       <NetworkBackground />
+      <GrowingTrees />
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Navbar />
         <main>

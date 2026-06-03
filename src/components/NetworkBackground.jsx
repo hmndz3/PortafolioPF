@@ -1,114 +1,121 @@
 import { useEffect, useRef } from 'react'
-import { useScroll, useTransform, motion } from 'framer-motion'
 
 export default function NetworkBackground() {
   const canvasRef = useRef(null)
-  const scrollRef = useRef(0)
-  const animRef = useRef(null)
-  const { scrollYProgress } = useScroll()
-
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', v => { scrollRef.current = v })
-    return unsubscribe
-  }, [scrollYProgress])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
+    let animId = null
+    let t = 0
+    let mx = 0.5, my = 0.5
+    let scrollPct = 0
 
     const resize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
     resize()
-    window.addEventListener('resize', resize)
 
-    // Generate nodes
-    const NODE_COUNT = 60
-    const nodes = Array.from({ length: NODE_COUNT }, (_, i) => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height * 3,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.2,
-      r: Math.random() * 2 + 1,
-      spawnAt: Math.random(), // scroll progress when this node activates
+    // Large soft blobs - aurora style
+    const blobs = [
+      { x: 0.15, y: 0.2,  r: 0.32, color: '255,140,122', speed: 0.0004, phase: 0     },
+      { x: 0.8,  y: 0.15, r: 0.28, color: '184,228,211', speed: 0.0003, phase: 1.5   },
+      { x: 0.5,  y: 0.6,  r: 0.35, color: '214,196,240', speed: 0.0005, phase: 3.0   },
+      { x: 0.1,  y: 0.75, r: 0.25, color: '255,200,180', speed: 0.0004, phase: 0.8   },
+      { x: 0.9,  y: 0.7,  r: 0.3,  color: '44,95,111',   speed: 0.0003, phase: 2.2   },
+      { x: 0.55, y: 0.1,  r: 0.22, color: '255,217,168', speed: 0.0006, phase: 4.1   },
+    ]
+
+    // Small floating particles
+    const particles = Array.from({ length: 55 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 3 + 1.5,
+      speed: Math.random() * 0.00008 + 0.00003,
+      phase: Math.random() * Math.PI * 2,
+      color: ['255,140,122','184,228,211','214,196,240','44,95,111'][Math.floor(Math.random()*4)],
+      floatAmp: Math.random() * 0.04 + 0.02,
     }))
 
-    const MAX_DIST = 160
+    const onMouse = e => { mx = e.clientX / window.innerWidth; my = e.clientY / window.innerHeight }
+    const onScroll = () => { scrollPct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight || 1) }
+
+    window.addEventListener('resize', resize)
+    window.addEventListener('mousemove', onMouse)
+    window.addEventListener('scroll', onScroll, { passive: true })
 
     const draw = () => {
+      t += 1
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const scroll = scrollRef.current
-      const viewportTop = scroll * canvas.height * 2.5
+      const W = canvas.width, H = canvas.height
 
-      nodes.forEach(n => {
-        n.x += n.vx
-        n.y += n.vy
-        if (n.x < 0 || n.x > canvas.width) n.vx *= -1
-        if (n.y < viewportTop - 100 || n.y > viewportTop + canvas.height + 100) n.vy *= -1
+      // Draw blobs
+      blobs.forEach(b => {
+        const bx = (b.x + Math.sin(t * b.speed + b.phase) * 0.1 + (mx - 0.5) * -0.04) * W
+        const by = (b.y + Math.cos(t * b.speed * 0.7 + b.phase) * 0.08 + (my - 0.5) * -0.03) * H
+        const br = b.r * Math.min(W, H)
+
+        const grad = ctx.createRadialGradient(bx, by, 0, bx, by, br)
+        grad.addColorStop(0, 'rgba(' + b.color + ',0.12)')
+        grad.addColorStop(0.5, 'rgba(' + b.color + ',0.06)')
+        grad.addColorStop(1, 'rgba(' + b.color + ',0)')
+
+        ctx.beginPath()
+        ctx.arc(bx, by, br, 0, Math.PI * 2)
+        ctx.fillStyle = grad
+        ctx.fill()
       })
 
-      const visible = nodes.filter(n => n.spawnAt <= scroll + 0.05)
+      // Draw particles
+      particles.forEach(p => {
+        const px = (p.x + Math.sin(t * p.speed + p.phase) * p.floatAmp + (mx - 0.5) * -0.02) * W
+        const py = (p.y + Math.cos(t * p.speed * 0.8 + p.phase) * p.floatAmp) * H
 
-      // Draw connections
-      for (let i = 0; i < visible.length; i++) {
-        for (let j = i + 1; j < visible.length; j++) {
-          const a = visible[i]
-          const b = visible[j]
-          const screenAy = a.y - viewportTop
-          const screenBy = b.y - viewportTop
-          const dx = a.x - b.x
-          const dy = screenAy - screenBy
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < MAX_DIST) {
-            const alpha = (1 - dist / MAX_DIST) * 0.25
-            const grad = ctx.createLinearGradient(a.x, screenAy, b.x, screenBy)
-            grad.addColorStop(0, `rgba(6,182,212,${alpha})`)
-            grad.addColorStop(1, `rgba(232,121,249,${alpha})`)
+        ctx.beginPath()
+        ctx.arc(px, py, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(' + p.color + ',0.28)'
+        ctx.fill()
+      })
+
+      // Thin connecting lines between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i]
+        const ax = (a.x + Math.sin(t * a.speed + a.phase) * a.floatAmp) * W
+        const ay = (a.y + Math.cos(t * a.speed * 0.8 + a.phase) * a.floatAmp) * H
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j]
+          const bx2 = (b.x + Math.sin(t * b.speed + b.phase) * b.floatAmp) * W
+          const by2 = (b.y + Math.cos(t * b.speed * 0.8 + b.phase) * b.floatAmp) * H
+          const dist = Math.sqrt((ax - bx2) ** 2 + (ay - by2) ** 2)
+          if (dist < 120) {
             ctx.beginPath()
-            ctx.moveTo(a.x, screenAy)
-            ctx.lineTo(b.x, screenBy)
-            ctx.strokeStyle = grad
-            ctx.lineWidth = 0.8
+            ctx.moveTo(ax, ay)
+            ctx.lineTo(bx2, by2)
+            ctx.strokeStyle = 'rgba(180,140,120,' + ((1 - dist / 120) * 0.1) + ')'
+            ctx.lineWidth = 0.6
             ctx.stroke()
           }
         }
       }
 
-      // Draw nodes
-      visible.forEach(n => {
-        const screenY = n.y - viewportTop
-        const progress = Math.min((scroll - n.spawnAt + 0.05) / 0.05, 1)
-        const cyan = Math.random() > 0.5
-        ctx.beginPath()
-        ctx.arc(n.x, screenY, n.r * progress, 0, Math.PI * 2)
-        ctx.fillStyle = cyan
-          ? `rgba(6,182,212,${0.5 * progress})`
-          : `rgba(232,121,249,${0.4 * progress})`
-        ctx.fill()
-      })
-
-      animRef.current = requestAnimationFrame(draw)
+      animId = requestAnimationFrame(draw)
     }
 
     draw()
-
     return () => {
       window.removeEventListener('resize', resize)
-      cancelAnimationFrame(animRef.current)
+      window.removeEventListener('mousemove', onMouse)
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(animId)
     }
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: 'fixed', inset: 0,
-        width: '100%', height: '100%',
-        pointerEvents: 'none', zIndex: 0,
-        opacity: 0.6,
-      }}
-    />
+    <canvas ref={canvasRef} style={{
+      position: 'fixed', inset: 0, width: '100%', height: '100%',
+      pointerEvents: 'none', zIndex: 0, opacity: 1,
+    }} />
   )
 }

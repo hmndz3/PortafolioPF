@@ -77,7 +77,7 @@ const projects = [
 function CodePreview({ lines, color }) {
   return (
     <div style={{
-      background: 'rgba(0,0,0,0.4)', borderRadius: '10px',
+      background: 'rgba(220,222,240,0.4)', backdropFilter: 'blur(8px)', borderRadius: '10px',
       padding: '16px', border: `1px solid ${color}20`,
       fontFamily: 'JetBrains Mono, monospace', fontSize: '11px',
       lineHeight: 1.7, overflow: 'hidden',
@@ -89,10 +89,10 @@ function CodePreview({ lines, color }) {
       </div>
       {lines.map((line, i) => (
         <div key={i} style={{
-          color: i === 0 ? `${color}` : i % 3 === 0 ? 'rgba(232,121,249,0.7)' : 'rgba(200,200,230,0.5)',
+          color: i === 0 ? `${color}` : i % 3 === 0 ? 'rgba(232,121,249,0.7)' : 'rgba(80,80,120,0.6)',
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>
-          <span style={{ color: 'rgba(100,100,140,0.5)', marginRight: '12px', userSelect: 'none' }}>{i + 1}</span>
+          <span style={{ color: 'rgba(160,160,200,0.7)', marginRight: '12px', userSelect: 'none' }}>{i + 1}</span>
           {line}
         </div>
       ))}
@@ -111,13 +111,13 @@ function ProjectCard({ project, index }) {
       transition={{ duration: 0.65, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.22 } }}
       style={{
-        background: 'rgba(15,15,30,0.7)', backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px',
+        background: 'var(--surface)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid var(--border)', borderRadius: '20px',
         display: 'flex', flexDirection: 'column', overflow: 'hidden',
-        position: 'relative', transition: 'border-color 0.3s',
+        position: 'relative', transition: 'all 0.3s', boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
       }}
       onMouseEnter={e => { e.currentTarget.style.borderColor = `${project.color}30` }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)' }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.boxShadow = '0 2px 16px rgba(0,0,0,0.06)' }}
     >
       {/* Top accent */}
       <div style={{ height: '1px', background: `linear-gradient(90deg, transparent, ${project.color}80, transparent)` }} />
@@ -148,11 +148,11 @@ function ProjectCard({ project, index }) {
             <a href={project.github} target="_blank" rel="noopener noreferrer"
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: '34px', height: '34px', border: '1px solid rgba(255,255,255,0.07)',
+                width: '34px', height: '34px', border: '1px solid var(--border)',
                 borderRadius: '8px', color: 'var(--text)', textDecoration: 'none', transition: 'all 0.2s', flexShrink: 0,
               }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = `${project.color}50`; e.currentTarget.style.color = project.color }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'var(--text)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text)' }}
             ><Github size={14} /></a>
           )}
         </div>
@@ -167,7 +167,7 @@ function ProjectCard({ project, index }) {
           {project.tech.map(t => (
             <span key={t} className="mono" style={{
               padding: '3px 9px', background: 'rgba(255,255,255,0.02)',
-              border: '1px solid rgba(255,255,255,0.06)', borderRadius: '4px',
+              border: '1px solid var(--border)', borderRadius: '4px',
               fontSize: '10px', color: 'var(--text)', fontWeight: 500,
             }}>{t}</span>
           ))}
