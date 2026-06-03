@@ -6,3 +6,9 @@ buildCommand = "npm install && npm run build"
 startCommand = "npx serve dist -l $PORT"
 healthcheckPath = "/"
 restartPolicyType = "on_failure"
+
+[nixpacks]
+providers = ["node"]
+
+[nixpacks.variables]
+NODE_VERSION = "20"
