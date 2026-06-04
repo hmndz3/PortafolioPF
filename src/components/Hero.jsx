@@ -98,9 +98,9 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
           style={{ fontSize: 'clamp(16px, 2.2vw, 20px)', color: 'var(--text)', lineHeight: 1.7, maxWidth: '520px', margin: '0 auto 48px' }}
         >
-          Estudiante de CS que aprende haciendo, no viendo.{' '}
-          <span style={{ color: 'var(--text-h)', fontWeight: 600 }}>Backend, bases de datos y redes</span>{' '}
-          son mi mundo. El front tambien me lo tomo en serio.
+          Del código al servidor, del servidor a la red.{' '}
+          <span style={{ color: 'var(--text-h)', fontWeight: 600 }}>Si tiene lógica, lo entiendo.</span>{' '}
+          Si tiene bugs, los encuentro.
         </motion.p>
 
         <motion.div
