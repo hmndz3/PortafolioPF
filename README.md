@@ -1,16 +1,34 @@
-# React + Vite
+# Portafolio — Harry Daniel Mendez
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Deploy:** https://portafoliopf-production.up.railway.app/
+**Repo:** https://github.com/hmndz3/PortafolioPF
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Reflexion
 
-## React Compiler
+**A quien va dirigido**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Este portafolio apunta a startups tecnicas o empresas medianas que buscan un dev con solida base en backend e infraestructura pero que no se raja con el frontend. No es para agencias creativas es para alguien que necesita a alguien que entienda como funciona todo el stack, desde la base de datos hasta lo que ve el usuario.
 
-## Expanding the ESLint configuration
+**Tecnologias que use y por que**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React + Vite** — rapido, moderno, y ya lo conocia bien. No necesitaba nada mas complejo.
+- **Framer Motion** — queria animaciones suaves sin escribir CSS complicado. Vale la pena.
+- **Tailwind CSS** — para estilos rapidos y consistentes sin salir del JSX.
+- **Railway** — ya lo habia usado en proyectos reales, tenia sentido desplegarlo ahi.
+- **FastAPI, PostgreSQL, Neo4j, Docker** — aparecen en los proyectos porque los use de verdad, no para decorar el CV.
+
+**Tecnologia que decidi no usar**
+
+No use Next.js. Lo vimos en el curso y hubiera tenido sentido por el SSR y el routing integrado, pero para un portafolio estatico era demasiado setup sin beneficio real. React puro con Vite fue mas rapido de arrancar y no necesitaba nada de lo que Next.js agrega. La decision fue intencional: menos framework, mas control.
+
+**Donde me arriesgue y donde jugue seguro**
+
+Me arriesgue en el diseño no use una plantilla ni un template de Tailwind. El sistema de colores, la tipografia, el layout, todo fue decision propia. Tambien me arriesgue con las animaciones del fondo, que me costaron mas de lo esperado.
+
+Jugue seguro con React porque ya lo domino bien. No tenia sentido aprender Svelte o Astro para este proyecto cuando el tiempo era limitado.
+
+**Si tuviera otra semana**
+
+Agregaria un blog tecnico corto, mejoaria la seccion de proyectos con demos en vivo dentro del card, y le daria mas trabajo al responsive en pantallas pequenas.
